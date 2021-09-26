@@ -18,6 +18,7 @@ void supplyMilk();
 class CoffeBox {
 private:
     double balance;
+    double income;
     int cup;
     double coin = 0;
     double costOfAmericano;
@@ -46,9 +47,9 @@ public:
         return balance;
     }
 
-    double depositCoin(double coin) {
-        balance += coin;
-        return balance;
+    double setIncome(double coin) {
+        income += coin;
+        return income;
     }
 
     double setCoin() {
@@ -131,11 +132,9 @@ int main() {
 
         switch (getNum(setNum())) {
             case 1:
-                cout
-                        << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn"
-                        << endl;
-                coffeBox.setCoin();
-                coffeBox.depositCoin(coffeBox.getCoin());
+                cout << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn" << endl;
+                coffeBox.setBalance(coffeBox.getBalance() + coffeBox.setCoin());
+                coffeBox.setIncome(coffeBox.getCoin());
                 break;
             case 2:
                 if (coffeBox.getBalance() >= coffeBox.getCostOfAmericano()) {
