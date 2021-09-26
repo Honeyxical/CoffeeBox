@@ -3,9 +3,7 @@
 
 using namespace std;
 
-int getNum(int num);
-
-int setNum();
+int getNum();
 
 void installingCup();
 
@@ -130,7 +128,7 @@ int main() {
         cout << "(c) 2021, by Hanexical, w_myslicki" << endl << endl;
         cout << "Please select the menu item:";
 
-        switch (getNum(setNum())) {
+        switch (getNum()) {
             case 1:
                 cout << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn" << endl;
                 coffeBox.setBalance(coffeBox.getBalance() + coffeBox.setCoin());
@@ -169,13 +167,9 @@ int main() {
     }
 }
 
-int setNum() {
+int getNum() {
     int num;
     cin >> num;
-    return num;
-}
-
-int getNum(int num) {
     return num;
 }
 
