@@ -3,7 +3,11 @@
 
 using namespace std;
 
+class CoffeeBox;
+
 int getNum();
+
+int getNum(string message);
 
 void installingCup();
 
@@ -13,7 +17,13 @@ void supplyCoffee();
 
 void supplyMilk();
 
-class CoffeBox {
+bool enterPin(CoffeeBox coffeeBox);
+
+void displayServiceMenu(CoffeeBox coffeeBox);
+
+void blockCoffeeBox();
+
+class CoffeeBox {
 private:
     double balance;
     double income;
@@ -22,6 +32,7 @@ private:
     double costOfAmericano;
     double costOfCappuccino;
     double costOfEspresso;
+    int pin = 1234;
 
 public:
     double getCostOfAmericano() {
@@ -50,6 +61,14 @@ public:
         return income;
     }
 
+    void zeroingIncome(){
+        this->income = 0;
+    }
+
+    double getIncome() const {
+        return income;
+    }
+
     double setCoin() {
         cout << "Put the coin in the coin receiver:";
         cin >> coin;
@@ -60,10 +79,23 @@ public:
         return coin;
     }
 
+    int getEmptyCup(){
+        return cup;
+    }
+
+    void setCup(int numOfCup){
+        this->cup += numOfCup;
+    }
+
+    int getPin(){
+        return pin;
+    }
+
 public:
 
     void makeAmericano(string coffee) {
         setBalance(getBalance() - getCostOfAmericano());
+        setCup(getEmptyCup() - 1);
         cout << coffee << " is being prepared!" << endl << endl;
         installingCup();
         supplyCoffee();
@@ -75,6 +107,7 @@ public:
 
     void makeCappuccino(string coffee) {
         setBalance(getBalance() - getCostOfCappuccino());
+        setCup(getEmptyCup() - 1);
         cout << coffee << " is being prepared!" << endl << endl;
         installingCup();
         supplyCoffee();
@@ -87,6 +120,7 @@ public:
 
     void makeEspresso(string coffee) {
         setBalance(getBalance() - getCostOfEspresso());
+        setCup(getEmptyCup() - 1);
         cout << coffee << " is being prepared!" << endl << endl;
         installingCup();
         supplyCoffee();
@@ -95,8 +129,22 @@ public:
         sleep(2);
     }
 
+    void addCups(){
+        cout << "There is " << getEmptyCup() << "empty cups.\nCapacity 700 cups." << endl;
+        int availableCups = 700 - getEmptyCup();
+        cout << "Available for replenishment: " << availableCups << " cups." << endl;
+        int cups = getNum("Enter quantity of cups: ");
+        if (cups <= availableCups){
+            setCup(cups);
+            cout << "Completed!" << endl;
+            sleep(2);
+        } else{
+            cout << "Error number of cups!" << endl;
+        }
+    }
+
 public:
-    CoffeBox(double balance, int cup, double costOfAmericano, double costOfCappuccino, double costOfEspresso) : balance(
+    CoffeeBox(double balance, int cup, double costOfAmericano, double costOfCappuccino, double costOfEspresso) : balance(
             balance), cup(cup),
                                                                                                                 costOfAmericano(
                                                                                                                         costOfAmericano),
@@ -114,7 +162,7 @@ public:
 
 int main() {
 
-    CoffeBox coffeBox(0, 7, 2.5, 3.5, 2);
+    CoffeeBox coffeBox(0, 7, 2.5, 3.5, 2);
 
     while (true) {
 
@@ -162,6 +210,11 @@ int main() {
                     break;
                 }
             case 5:
+                if(enterPin(coffeBox)){
+                    displayServiceMenu(coffeBox);
+                } else{
+                    blockCoffeeBox();
+                }
                 break;
         }
     }
@@ -208,4 +261,76 @@ void supplyMilk() {
     cout << "Supply hot milk";
     loadingAnimation();
     cout << endl;
+}
+
+
+
+bool enterPin(CoffeeBox coffeeBox){
+    bool isPin = false;
+    int filedCounter = 0;
+    int pin = 0;
+
+    while (!isPin){
+        pin = getNum("Enter service pin: ");
+        if(pin > 9999){
+            cout << "Wrong password length." << endl;
+        } else if(pin == coffeeBox.getPin()){
+            isPin = true;
+            return true;
+        }
+        filedCounter++;
+        if (filedCounter == 2){
+            cout << "Last chance to enter pin. \nCoffee Box will be block." << endl;
+        } else if (filedCounter == 3){
+            break;
+        }
+    }
+}
+
+void displayServiceMenu(CoffeeBox coffeeBox){
+    int exit = 0;
+    while (exit == 0){
+        cout << "Service menu: " << endl;
+        cout << "1. View balance." << endl;
+        cout << "2. Withdrawal of proceeds" << endl;
+        cout << "3. View the number of empty cups" << endl;
+        cout << "4. Add empty cups" << endl;
+        cout << "5. Return to main menu" << endl << endl;
+
+        switch (getNum("Select menu item: ")) {
+            case 1:
+                cout << "Balance: " << coffeeBox.getIncome() << " byn." << endl << endl;
+                sleep(3);
+                break;
+            case 2:
+                cout << "Amount of withdrawn proceeds " << coffeeBox.getIncome() << " byn." << endl;
+                coffeeBox.zeroingIncome();
+                sleep(3);
+                break;
+            case 3:
+                cout << "Quantity empty cups: " << coffeeBox.getEmptyCup() << endl;
+                sleep(3);
+                break;
+            case 4:
+                coffeeBox.addCups();
+                break;
+            case 5:
+                exit = 1;
+                break;
+        }
+    }
+}
+
+//----------service---------------
+
+int getNum(string message){
+    cout << message;
+    int num = 0;
+    cin >> num;
+    return num;
+}
+
+void blockCoffeeBox(){
+    cout << "Coffee Box Is blocked!";
+    exit(2);
 }
