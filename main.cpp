@@ -19,12 +19,13 @@ public:
     int getBalance(){
         return balance;
     }
-    int depositCoin(int coin){
+    int depositCoin(int coin) {
         balance += coin;
         return balance;
     }
 };
 
+//say Hello
 int main() {
 
     CoffeBox coffeBox(0, 7);

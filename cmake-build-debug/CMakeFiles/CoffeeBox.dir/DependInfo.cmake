@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/ilyabenikov/CLionProjects/Projects/CoffeeBox/main.cpp" "/Users/ilyabenikov/CLionProjects/Projects/CoffeeBox/cmake-build-debug/CMakeFiles/CoffeeBox.dir/main.cpp.o"
+  "C:/IncubatorProjects/CoffeeBox/main.cpp" "C:/IncubatorProjects/CoffeeBox/cmake-build-debug/CMakeFiles/CoffeeBox.dir/main.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
