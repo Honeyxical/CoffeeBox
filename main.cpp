@@ -131,15 +131,16 @@ bool enterPin(CoffeeBox coffeeBox) {
         pin = getNum("Enter service pin: ");
         if (pin > 9999) {
             cout << "Wrong password length." << endl;
-        } else if (pin == coffeeBox.getPin()) {
-            isPin = true;
-            return true;
         }
         filedCounter++;
         if (filedCounter == 2) {
             cout << "Last chance to enter pin. \nCoffee Box will be block." << endl;
         } else if (filedCounter == 3) {
             break;
+        }
+        if(pin == coffeeBox.getPin()){
+            isPin = true;
+            return true;
         }
     }
 }
