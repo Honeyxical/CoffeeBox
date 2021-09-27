@@ -27,6 +27,7 @@ private:
     double costOfCappuccino;
     double costOfEspresso;
     int pin = 1234;
+    bool block = false;
 
 public:
     double getCostOfAmericano() {
@@ -81,6 +82,14 @@ public:
 
     int getPin() {
         return pin;
+    }
+
+    bool isBlock() const {
+        return block;
+    }
+
+    void setBlock(bool block) {
+        CoffeeBox::block = block;
     }
 
 public:

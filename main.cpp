@@ -5,41 +5,35 @@
 using namespace std;
 
 int getNum();
+int getNum(string message);
 
 bool enterPin(CoffeeBox coffeeBox);
 
-void displayServiceMenu(CoffeeBox coffeeBox);
+void serviceMenu(CoffeeBox coffeeBox);
+void printServiceMenu();
+void printMainMenu(CoffeeBox coffeeBox);
 
 void blockCoffeeBox();
 
 int main() {
 
-    CoffeeBox coffeBox(0, 7, 2.5, 3.5, 2);
+    CoffeeBox coffeeBox(0, 7, 2.5, 3.5, 2);
 
-    while (true) {
-
-        cout << "Coffee Box. v1.0" << endl;
-        cout << "Balance: " << coffeBox.getBalance() << " byn." << endl;
-        cout << "1. Add money." << endl;
-        cout << "2. Make Americano " << "(" << coffeBox.getCostOfAmericano() << " byn)." << endl;
-        cout << "3. Make Cappuccino " << "(" << coffeBox.getCostOfCappuccino() << " byn)." << endl;
-        cout << "4. Make Espresso " << "(" << coffeBox.getCostOfEspresso() << " byn)." << endl;
-        cout << "5. Service menu." << endl;
-        cout << "(c) 2021, by Hanexical, w_myslicki" << endl << endl;
-        cout << "Please select the menu item:";
+    while (!coffeeBox.isBlock()) {
+        printMainMenu(coffeeBox);
 
         switch (getNum()) {
             case 1:
                 cout
                         << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn"
                         << endl;
-                coffeBox.setCoin();
-                coffeBox.setBalance(coffeBox.getBalance() + coffeBox.getCoin());
-                coffeBox.setIncome(coffeBox.getCoin());
+                coffeeBox.setCoin();
+                coffeeBox.setBalance(coffeeBox.getBalance() + coffeeBox.getCoin());
+                coffeeBox.setIncome(coffeeBox.getCoin());
                 break;
             case 2:
-                if (coffeBox.getBalance() >= coffeBox.getCostOfAmericano()) {
-                    coffeBox.makeAmericano("Americano");
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfAmericano()) {
+                    coffeeBox.makeAmericano("Americano");
                     break;
                 } else {
                     cout << "Not enough funds!" << endl;
@@ -47,8 +41,8 @@ int main() {
                     break;
                 }
             case 3:
-                if (coffeBox.getBalance() >= coffeBox.getCostOfCappuccino()) {
-                    coffeBox.makeCappuccino("Cappuccino");
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfCappuccino()) {
+                    coffeeBox.makeCappuccino("Cappuccino");
                     break;
                 } else {
                     cout << "Not enough funds!" << endl;
@@ -56,8 +50,8 @@ int main() {
                     break;
                 }
             case 4:
-                if (coffeBox.getBalance() >= coffeBox.getCostOfEspresso()) {
-                    coffeBox.makeEspresso("Espresso");
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfEspresso()) {
+                    coffeeBox.makeEspresso("Espresso");
                     break;
                 } else {
                     cout << "Not enough funds!" << endl;
@@ -65,9 +59,10 @@ int main() {
                     break;
                 }
             case 5:
-                if (enterPin(coffeBox)) {
-                    displayServiceMenu(coffeBox);
-                } else {
+                if (enterPin(coffeeBox)) {
+                    serviceMenu(coffeeBox);
+                } else{
+                    coffeeBox.setBlock(true);
                     blockCoffeeBox();
                 }
                 break;
@@ -75,7 +70,16 @@ int main() {
     }
 }
 
+
+
 int getNum() {
+    int num;
+    cin >> num;
+    return num;
+}
+
+int getNum(string message) {
+    cout << message;
     int num;
     cin >> num;
     return num;
@@ -140,15 +144,10 @@ bool enterPin(CoffeeBox coffeeBox) {
     }
 }
 
-void displayServiceMenu(CoffeeBox coffeeBox) {
+void serviceMenu(CoffeeBox coffeeBox) {
     int exit = 0;
     while (exit == 0) {
-        cout << "Service menu: " << endl;
-        cout << "1. View balance." << endl;
-        cout << "2. Withdrawal of proceeds" << endl;
-        cout << "3. View the number of empty cups" << endl;
-        cout << "4. Add empty cups" << endl;
-        cout << "5. Return to main menu" << endl << endl;
+        printServiceMenu();
 
         switch (getNum("Select menu item: ")) {
             case 1:
@@ -174,16 +173,28 @@ void displayServiceMenu(CoffeeBox coffeeBox) {
     }
 }
 
-//----------service---------------
-
-int getNum(string message) {
-    cout << message;
-    int num = 0;
-    cin >> num;
-    return num;
-}
-
 void blockCoffeeBox() {
     cout << "Coffee Box Is blocked!";
-    exit(2);
+    exit(1);
+}
+
+void printMainMenu(CoffeeBox coffeeBox){
+    cout << "Coffee Box. LEI700 v1.0" << endl;
+    cout << "Balance: " << coffeeBox.getBalance() << " byn." << endl;
+    cout << "1. Add money." << endl;
+    cout << "2. Make Americano " << "(" << coffeeBox.getCostOfAmericano() << " byn)." << endl;
+    cout << "3. Make Cappuccino " << "(" << coffeeBox.getCostOfCappuccino() << " byn)." << endl;
+    cout << "4. Make Espresso " << "(" << coffeeBox.getCostOfEspresso() << " byn)." << endl;
+    cout << "5. Service menu." << endl;
+    cout << "(c) 2021, by Hanexical, w_myslicki" << endl << endl;
+    cout << "Please select the menu item:";
+}
+
+void printServiceMenu(){
+    cout << "Service menu: " << endl;
+    cout << "1. View balance." << endl;
+    cout << "2. Withdrawal of proceeds" << endl;
+    cout << "3. View the number of empty cups" << endl;
+    cout << "4. Add empty cups" << endl;
+    cout << "5. Return to main menu" << endl << endl;
 }
