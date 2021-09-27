@@ -26,11 +26,11 @@ int main() {
 
     while (!coffeeBox.isBlock()) {
         printMainMenu(coffeeBox);
-        switch (getNum()) {
+        switch (getNum()) { // add default
             case 1:
                 printCoinMenu();
                 while (true) {
-                    switch (getNum()) {
+                    switch (getNum()) { // fix it / add default
                         case 1:
                             coffeeBox.businessConcepts(2);
                             break;
@@ -154,7 +154,7 @@ bool enterPin(CoffeeBox coffeeBox) {
         if (filedCounter == 2) {
             cout << "Last chance to enter pin. \nCoffee Box will be block." << endl;
         } else if (filedCounter == 3) {
-            break;
+            return false;
         }
         if (pin == coffeeBox.getPin()) {
             isPin = true;

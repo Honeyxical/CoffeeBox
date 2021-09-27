@@ -1,4 +1,4 @@
-"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\IncubatorProjects\CoffeeBox
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /Users/ilyabenikov/CLionProjects/Projects/CoffeeBox
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/IncubatorProjects/CoffeeBox/cmake-build-debug
+-- Build files have been written to: /Users/ilyabenikov/CLionProjects/Projects/CoffeeBox/cmake-build-debug

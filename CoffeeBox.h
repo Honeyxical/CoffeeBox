@@ -22,7 +22,6 @@ private:
     double balance = 0;
     double income = 0;
     int cup;
-    double coin = 0;
     double costOfAmericano;
     double costOfCappuccino;
     double costOfEspresso;
@@ -63,14 +62,6 @@ public:
         return income;
     }
 
-    void setCoin(double coin) {
-        this->coin = coin;
-    }
-
-    double getCoin() {
-        return coin;
-    }
-
     int getEmptyCup() {
         return cup;
     }
@@ -91,10 +82,9 @@ public:
         CoffeeBox::block = block;
     }
 
-    void businessConcepts(double coin) {
-        setCoin(coin);
-        setBalance(getBalance() + getCoin());
-        setIncome(getCoin());
+    void businessConcepts(double coin) { // fix name
+        setBalance(getBalance() + coin);
+        setIncome(coin);
     }
 
 public:
