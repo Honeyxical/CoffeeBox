@@ -63,9 +63,8 @@ public:
         return income;
     }
 
-    double setCoin() {
-        cout << "Put the coin in the coin receiver:";
-        cin >> coin;
+    void setCoin(double coin) {
+        this->coin = coin;
     }
 
     double getCoin() {
@@ -90,6 +89,12 @@ public:
 
     void setBlock(bool block) {
         CoffeeBox::block = block;
+    }
+
+    void businessConcepts(double coin) {
+        setCoin(coin);
+        setBalance(getBalance() + getCoin());
+        setIncome(getCoin());
     }
 
 public:

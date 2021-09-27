@@ -5,13 +5,18 @@
 using namespace std;
 
 int getNum();
+
 int getNum(string message);
 
 bool enterPin(CoffeeBox coffeeBox);
 
 void serviceMenu(CoffeeBox coffeeBox);
+
 void printServiceMenu();
+
 void printMainMenu(CoffeeBox coffeeBox);
+
+void printCoinMenu();
 
 void blockCoffeeBox();
 
@@ -21,15 +26,29 @@ int main() {
 
     while (!coffeeBox.isBlock()) {
         printMainMenu(coffeeBox);
-
         switch (getNum()) {
             case 1:
-                cout
-                        << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn"
-                        << endl;
-                coffeeBox.setCoin();
-                coffeeBox.setBalance(coffeeBox.getBalance() + coffeeBox.getCoin());
-                coffeeBox.setIncome(coffeeBox.getCoin());
+                printCoinMenu();
+                while (true) {
+                    switch (getNum()) {
+                        case 1:
+                            coffeeBox.businessConcepts(2);
+                            break;
+                        case 2:
+                            coffeeBox.businessConcepts(1);
+                            break;
+                        case 3:
+                            coffeeBox.businessConcepts(0.5);
+                            break;
+                        case 4:
+                            coffeeBox.businessConcepts(0.2);
+                            break;
+                        case 5:
+                            coffeeBox.businessConcepts(0.1);
+                            break;
+                    }
+                    break;
+                }
                 break;
             case 2:
                 if (coffeeBox.getBalance() >= coffeeBox.getCostOfAmericano()) {
@@ -61,7 +80,7 @@ int main() {
             case 5:
                 if (enterPin(coffeeBox)) {
                     serviceMenu(coffeeBox);
-                } else{
+                } else {
                     coffeeBox.setBlock(true);
                     blockCoffeeBox();
                 }
@@ -69,7 +88,6 @@ int main() {
         }
     }
 }
-
 
 
 int getNum() {
@@ -138,7 +156,7 @@ bool enterPin(CoffeeBox coffeeBox) {
         } else if (filedCounter == 3) {
             break;
         }
-        if(pin == coffeeBox.getPin()){
+        if (pin == coffeeBox.getPin()) {
             isPin = true;
             return true;
         }
@@ -179,7 +197,7 @@ void blockCoffeeBox() {
     exit(1);
 }
 
-void printMainMenu(CoffeeBox coffeeBox){
+void printMainMenu(CoffeeBox coffeeBox) {
     cout << "Coffee Box. LEI700 v1.0" << endl;
     cout << "Balance: " << coffeeBox.getBalance() << " byn." << endl;
     cout << "1. Add money." << endl;
@@ -191,11 +209,21 @@ void printMainMenu(CoffeeBox coffeeBox){
     cout << "Please select the menu item:";
 }
 
-void printServiceMenu(){
+void printServiceMenu() {
     cout << "Service menu: " << endl;
     cout << "1. View balance." << endl;
     cout << "2. Withdrawal of proceeds" << endl;
     cout << "3. View the number of empty cups" << endl;
     cout << "4. Add empty cups" << endl;
     cout << "5. Return to main menu" << endl << endl;
+}
+
+void printCoinMenu() {
+    cout << "Select the nominal value!" << endl;
+    cout << "1. 2 byn." << endl;
+    cout << "2. 1 byn." << endl;
+    cout << "3. 0.5 byn." << endl;
+    cout << "4. 0.2 byn." << endl;
+    cout << "5. 0.1 byn." << endl << endl;
+    cout << "Please add a coin:";
 }
