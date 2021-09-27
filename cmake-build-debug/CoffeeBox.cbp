@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/IncubatorProjects/CoffeeBox/CoffeeBox.h">
+			<Option target="CoffeeBox"/>
+		</Unit>
 		<Unit filename="C:/IncubatorProjects/CoffeeBox/main.cpp">
 			<Option target="CoffeeBox"/>
 		</Unit>
