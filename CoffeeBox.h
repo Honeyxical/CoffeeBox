@@ -13,18 +13,25 @@ void supplyWater();
 
 void supplyMilk();
 
+
 class CoffeeBox {
 private:
     double balance = 0;
     double income = 0;
-    int cup = 7;
-    double costOfAmericano;
-    double costOfCappuccino;
-    double costOfEspresso;
+    int cup = 1;
+    double costOfAmericano = 2.5;
+    double costOfCappuccino = 3.5;
+    double costOfEspresso = 2;
     int pin = 1234;
     bool block = false;
 
 public:
+
+    CoffeeBox(double balance, double income) : balance(balance), income(income) {
+        this->balance = balance;
+        this->income = income;
+    }
+
     double getCostOfAmericano() {
         return costOfAmericano;
     }
@@ -37,7 +44,6 @@ public:
         return costOfEspresso;
     }
 
-public:
     double getBalance() {
         return balance;
     }
@@ -89,19 +95,29 @@ public:
         increaseIncome(coin);
     }
 
+    void balanceWriteOff(string nameCoffee) {
+        if(nameCoffee == "Americano"){
+            balance -= getCostOfAmericano();
+        } else if(nameCoffee == "Cappuccino"){
+            balance -= getCostOfCappuccino();
+        } else{
+            balance -= getCostOfEspresso();
+        }
+    }
+
     void makeCoffee(string nameCoffee) {
         setCup(getEmptyCup() - 1);
         cout << nameCoffee << " is being prepared!" << endl << endl;
         installingCup();
         supplyCoffee();
-        if (equal(nameCoffee.begin(), nameCoffee.end(), "Americano")) {
-            setBalance(getBalance() - getCostOfAmericano());
+        if (nameCoffee == "Americano") {
+            balanceWriteOff(nameCoffee);
             supplyWater();
-        } else if (equal(nameCoffee.begin(), nameCoffee.end(), "Cappuccino")) {
-            setBalance(getBalance() - getCostOfCappuccino());
+        } else if (nameCoffee == "Cappuccino") {
+            balanceWriteOff(nameCoffee);
             supplyMilk();
-        } else if (equal(nameCoffee.begin(), nameCoffee.end(), "Espresso")) {
-            setBalance(getBalance() - getCostOfEspresso());
+        } else if (nameCoffee == "Espresso") {
+            balanceWriteOff(nameCoffee);
         }
         cout << endl;
         cout << nameCoffee << " is ready! Take the cup away!" << endl;
@@ -122,21 +138,5 @@ public:
         }
     }
 
-public:
-    CoffeeBox(double balance, double costOfAmericano, double costOfCappuccino, double costOfEspresso)
-            : balance(
-            balance),
-              costOfAmericano(
-                      costOfAmericano),
-              costOfCappuccino(
-                      costOfCappuccino),
-              costOfEspresso(
-                      costOfEspresso) {
-        this->balance = balance;
-        this->costOfAmericano = costOfAmericano;
-        this->costOfCappuccino = costOfCappuccino;
-        this->costOfEspresso = costOfEspresso;
-    }
 };
-
 #endif //COFFEEBOX_COFFEEBOX_H

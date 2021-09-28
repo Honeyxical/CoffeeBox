@@ -8,9 +8,9 @@ int getNum();
 
 int getNum(string message);
 
-bool enterPin(CoffeeBox coffeeBox);
+bool enterPin(CoffeeBox &coffeeBox);
 
-void serviceMenu(CoffeeBox coffeeBox);
+void serviceMenu(CoffeeBox &coffeeBox);
 
 void printServiceMenu();
 
@@ -20,17 +20,18 @@ void printCoinMenu();
 
 void blockCoffeeBox();
 
+void cupCheck(int numOfCups);
+
 int main() {
 
-    CoffeeBox coffeeBox(0, 2.5, 3.5, 2);
-    bool exit = false;
+    CoffeeBox coffeeBox(0,0);
 
     while (!coffeeBox.isBlock() && coffeeBox.getEmptyCup() > 0) {
-       // if (coffeeBox.getEmptyCup() > 0) {
-            printMainMenu(coffeeBox);
-            switch (getNum()) {
-                case 1:
-                    printCoinMenu();
+        printMainMenu(coffeeBox);
+        switch (getNum()) {
+            case 1:
+                cupCheck(coffeeBox.getEmptyCup());
+                printCoinMenu();
                     while (true) {
                         switch (getNum()) {
                             case 1:
@@ -86,8 +87,6 @@ int main() {
                 case 5:
                     if (enterPin(coffeeBox)) {
                         serviceMenu(coffeeBox);
-                    } else {
-                        coffeeBox.setBlock(true);
                     }
                     break;
             }
@@ -101,96 +100,23 @@ int main() {
     }
 }
 
-int getNum() {
-    int num;
-    cin >> num;
-    return num;
-}
-
-int getNum(string message) {
-    cout << message;
-    int num;
-    cin >> num;
-    return num;
-}
-
-void loadingAnimation() {
-    while (true) {
-        sleep(1);
-        cout << "." << flush;
-        sleep(1);
-        cout << "." << flush;
-        sleep(1);
-        cout << "." << flush;
-        sleep(1);
-        break;
-    }
-}
-
-void installingCup() {
-    cout << "Installing a coffee cup";
-    loadingAnimation();
-    cout << endl;
-}
-
-void supplyWater() {
-    cout << "Supply of boiling water";
-    loadingAnimation();
-    cout << endl;
-}
-
-void supplyCoffee() {
-    cout << "Grinding of coffee beans";
-    loadingAnimation();
-    cout << endl;
-}
-
-void supplyMilk() {
-    cout << "Supply hot milk";
-    loadingAnimation();
-    cout << endl;
-}
-
-bool enterPin(CoffeeBox coffeeBox) {
-    bool isPin = false;
-    int filedCounter = 0;
-    int pin;
-
-    while (!isPin) {
-        pin = getNum("Enter service pin: ");
-        if (pin > 9999) {
-            cout << "Wrong password length." << endl;
-        }
-        filedCounter++;
-        if (filedCounter == 2) {
-            cout << "Last chance to enter pin. \nCoffee Box will be block." << endl;
-        } else if (filedCounter == 3) {
-            return false;
-        }
-        if (pin == coffeeBox.getPin()) {
-            isPin = true;
-            return true;
-        }
-    }
-}
-
-void serviceMenu(CoffeeBox coffeeBox) {
+void serviceMenu(CoffeeBox &coffeeBox) {
     bool exit = false;
     while (!exit) {
         printServiceMenu();
         switch (getNum("Select menu item: ")) {
             case 1:
                 cout << "Balance: " << coffeeBox.getIncome() << " byn." << endl << endl;
-                sleep(3);
+                sleep(1);
                 break;
             case 2:
                 cout << "Amount of withdrawn proceeds " << coffeeBox.getIncome() << " byn." << endl;
                 coffeeBox.zeroingIncome();
-                sleep(3);
+                sleep(1);
                 break;
             case 3:
                 cout << "Quantity empty cups: " << coffeeBox.getEmptyCup() << endl;
-                sleep(3);
+                sleep(1);
                 break;
             case 4:
                 coffeeBox.addCups();
@@ -231,6 +157,93 @@ void printCoinMenu() {
     cout << "4. 0.2 byn." << endl;
     cout << "5. 0.1 byn." << endl << endl;
     cout << "Please add a coin:";
+}
+
+bool enterPin(CoffeeBox &coffeeBox) {
+    bool isPin = false;
+    int filedCounter = 0;
+    int servicePin = coffeeBox.getPin();
+    int pin;
+
+    while (!isPin) {
+        pin = getNum("Enter service pin: ");
+        if (pin > 9999) {
+            cout << "Wrong password length." << endl;
+        }
+        filedCounter++;
+        if (filedCounter == 2) {
+            cout << "Last chance to enter pin. \nCoffee Box will be block." << endl;
+        } else if (filedCounter == 3) {
+            coffeeBox.setBlock(true);
+            return false;
+        }
+        if (pin == servicePin) {
+            isPin = true;
+            return true;
+        }
+    }
+}
+
+// Animation.
+
+void loadingAnimation() {
+    while (true) {
+        sleep(1);
+        cout << "." << flush;
+        sleep(1);
+        cout << "." << flush;
+        sleep(1);
+        cout << "." << flush;
+        sleep(1);
+        break;
+    }
+}
+
+void installingCup() {
+    cout << "Installing a coffee cup";
+    loadingAnimation();
+    cout << endl;
+}
+
+void supplyWater() {
+    cout << "Supply of boiling water";
+    loadingAnimation();
+    cout << endl;
+}
+
+void supplyCoffee() {
+    cout << "Grinding of coffee beans";
+    loadingAnimation();
+    cout << endl;
+}
+
+void supplyMilk() {
+    cout << "Supply hot milk";
+    loadingAnimation();
+    cout << endl;
+}
+
+// cin
+
+int getNum() {
+    int num;
+    cin >> num;
+    return num;
+}
+
+int getNum(string message) {
+    cout << message;
+    int num;
+    cin >> num;
+    return num;
+}
+
+// block
+
+void cupCheck(int numOfCups) {
+    if(numOfCups <= 5){
+        cout << "Warning, cups left " << numOfCups  << "." << endl;
+    }
 }
 
 void blockCoffeeBox() {
