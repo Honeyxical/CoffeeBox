@@ -42,7 +42,7 @@ public:
     }
 
 public:
-    double setBalance(double balance) {
+    void setBalance(double balance) {
         this->balance = balance;
     }
 
@@ -50,7 +50,7 @@ public:
         return balance;
     }
 
-    double setIncome(double coin) {
+    void setIncome(double coin) {
         income += coin;
     }
 
@@ -58,7 +58,7 @@ public:
         this->income = 0;
     }
 
-    double getIncome() const {
+    double getIncome() {
         return income;
     }
 
@@ -67,6 +67,10 @@ public:
     }
 
     void setCup(int numOfCup) {
+        this->cup = numOfCup;
+    }
+
+    void addNewCup(int numOfCup) {
         this->cup += numOfCup;
     }
 
@@ -74,54 +78,37 @@ public:
         return pin;
     }
 
-    bool isBlock() const {
+    bool isBlock() {
         return block;
     }
 
     void setBlock(bool block) {
-        CoffeeBox::block = block;
+        this->block = block;
     }
 
-    void businessConcepts(double coin) { // fix name
+    void balanceReplenishment(double coin) {
         setBalance(getBalance() + coin);
         setIncome(coin);
     }
 
 public:
 
-    void makeAmericano(string coffee) {
-        setBalance(getBalance() - getCostOfAmericano());
+    void makeCoffee(string nameCoffee) {
         setCup(getEmptyCup() - 1);
-        cout << coffee << " is being prepared!" << endl << endl;
+        cout << nameCoffee << " is being prepared!" << endl << endl;
         installingCup();
         supplyCoffee();
-        supplyWater();
+        if (equal(nameCoffee.begin(), nameCoffee.end(), "Americano")) {
+            setBalance(getBalance() - getCostOfAmericano());
+            supplyWater();
+        } else if (equal(nameCoffee.begin(), nameCoffee.end(), "Cappuccino")) {
+            setBalance(getBalance() - getCostOfCappuccino());
+            supplyMilk();
+        } else if (equal(nameCoffee.begin(), nameCoffee.end(), "Espresso")) {
+            setBalance(getBalance() - getCostOfEspresso());
+        }
         cout << endl;
-        cout << coffee << " is ready! Take the cup away!" << endl;
-        sleep(2);
-    }
-
-    void makeCappuccino(string coffee) {
-        setBalance(getBalance() - getCostOfCappuccino());
-        setCup(getEmptyCup() - 1);
-        cout << coffee << " is being prepared!" << endl << endl;
-        installingCup();
-        supplyCoffee();
-        supplyWater();
-        supplyMilk();
-        cout << endl;
-        cout << coffee << " is ready! Take the cup away!" << endl;
-        sleep(2);
-    }
-
-    void makeEspresso(string coffee) {
-        setBalance(getBalance() - getCostOfEspresso());
-        setCup(getEmptyCup() - 1);
-        cout << coffee << " is being prepared!" << endl << endl;
-        installingCup();
-        supplyCoffee();
-        cout << endl;
-        cout << coffee << " is ready! Take the cup away!" << endl;
+        cout << nameCoffee << " is ready! Take the cup away!" << endl;
         sleep(2);
     }
 
@@ -131,7 +118,7 @@ public:
         cout << "Available for replenishment: " << availableCups << " cups." << endl;
         int cups = getNum("Enter quantity of cups: ");
         if (cups <= availableCups) {
-            setCup(cups);
+            addNewCup(cups);
             cout << "Completed!" << endl;
             sleep(2);
         } else {

@@ -1,19 +1,20 @@
-class CoffeBox{
+class CoffeeBox {
 private:
     double balance;
     int cup;
 
 public:
-    CoffeBox(int balance, int cup) : balance(balance), cup(cup) {
+    CoffeeBox(int balance, int cup) : balance(balance), cup(cup) {
         this->balance = balance;
         this->cup = cup;
     }
 
 public:
-    int getBalance(){
+    int getBalance() {
         return balance;
     }
-    int depositCoin(int coin){
+
+    int depositCoin(int coin) {
         balance += coin;
         return balance;
     }
