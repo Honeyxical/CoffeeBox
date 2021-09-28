@@ -167,6 +167,10 @@ bool enterPin(CoffeeBox &coffeeBox) {
 
     while (!isPin) {
         pin = getNum("Enter service pin: ");
+        if (pin == servicePin) {
+            isPin = true;
+            return true;
+        }
         if (pin > 9999) {
             cout << "Wrong password length." << endl;
         }
@@ -176,10 +180,6 @@ bool enterPin(CoffeeBox &coffeeBox) {
         } else if (filedCounter == 3) {
             coffeeBox.setBlock(true);
             return false;
-        }
-        if (pin == servicePin) {
-            isPin = true;
-            return true;
         }
     }
 }
