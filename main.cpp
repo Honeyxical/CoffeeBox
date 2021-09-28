@@ -22,12 +22,13 @@ void blockCoffeeBox();
 
 int main() {
 
-    CoffeeBox coffeeBox(0, 7, 2.5, 3.5, 2);
+    CoffeeBox coffeeBox(0, 2.5, 3.5, 2);
+    bool exit = false;
 
-    while (!coffeeBox.isBlock()) {
-        if (coffeeBox.getEmptyCup() > 0) {
+    while (!coffeeBox.isBlock() && coffeeBox.getEmptyCup() > 0) {
+       // if (coffeeBox.getEmptyCup() > 0) {
             printMainMenu(coffeeBox);
-            switch (getNum()) { // add default // for what purpose?
+            switch (getNum()) {
                 case 1:
                     printCoinMenu();
                     while (true) {
@@ -87,14 +88,16 @@ int main() {
                         serviceMenu(coffeeBox);
                     } else {
                         coffeeBox.setBlock(true);
-                        blockCoffeeBox();
                     }
                     break;
             }
-        } else {
-            cout << "There are not enough cups :(" << endl;
-            blockCoffeeBox();
-        }
+
+    }
+    if(coffeeBox.isBlock()) {
+        blockCoffeeBox();
+    } else if(coffeeBox.getEmptyCup() > 0){
+        cout << "There are not enough cups :(" << endl;
+        blockCoffeeBox();
     }
 }
 
@@ -172,10 +175,9 @@ bool enterPin(CoffeeBox coffeeBox) {
 }
 
 void serviceMenu(CoffeeBox coffeeBox) {
-    int exit = 0;
-    while (exit == 0) {
+    bool exit = false;
+    while (!exit) {
         printServiceMenu();
-
         switch (getNum("Select menu item: ")) {
             case 1:
                 cout << "Balance: " << coffeeBox.getIncome() << " byn." << endl << endl;
@@ -194,15 +196,10 @@ void serviceMenu(CoffeeBox coffeeBox) {
                 coffeeBox.addCups();
                 break;
             case 5:
-                exit = 1;
+                exit = true;
                 break;
         }
     }
-}
-
-void blockCoffeeBox() {
-    cout << "Coffee Box Is blocked!";
-    exit(1);
 }
 
 void printMainMenu(CoffeeBox coffeeBox) {
@@ -234,4 +231,9 @@ void printCoinMenu() {
     cout << "4. 0.2 byn." << endl;
     cout << "5. 0.1 byn." << endl << endl;
     cout << "Please add a coin:";
+}
+
+void blockCoffeeBox() {
+    cout << "Coffee Box Is blocked!";
+    exit(1);
 }

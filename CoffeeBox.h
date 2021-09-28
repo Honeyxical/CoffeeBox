@@ -1,7 +1,3 @@
-//
-// Created by Владислав on 27.09.2021.
-//
-
 #ifndef COFFEEBOX_COFFEEBOX_H
 #define COFFEEBOX_COFFEEBOX_H
 
@@ -21,7 +17,7 @@ class CoffeeBox {
 private:
     double balance = 0;
     double income = 0;
-    int cup;
+    int cup = 7;
     double costOfAmericano;
     double costOfCappuccino;
     double costOfEspresso;
@@ -42,20 +38,12 @@ public:
     }
 
 public:
-    void setBalance(double balance) {
-        this->balance = balance;
-    }
-
     double getBalance() {
         return balance;
     }
 
-    void setIncome(double coin) {
-        income += coin;
-    }
-
-    void zeroingIncome() {
-        this->income = 0;
+    void setBalance(double balance) {
+        this->balance = balance;
     }
 
     double getIncome() {
@@ -70,10 +58,6 @@ public:
         this->cup = numOfCup;
     }
 
-    void addNewCup(int numOfCup) {
-        this->cup += numOfCup;
-    }
-
     int getPin() {
         return pin;
     }
@@ -86,12 +70,24 @@ public:
         this->block = block;
     }
 
-    void balanceReplenishment(double coin) {
-        setBalance(getBalance() + coin);
-        setIncome(coin);
+public:
+
+    void increaseIncome(double coin) {
+        income += coin;
     }
 
-public:
+    void zeroingIncome() {
+        this->income = 0;
+    }
+
+    void addNewCup(int numOfCup) {
+        this->cup += numOfCup;
+    }
+
+    void balanceReplenishment(double coin) {
+        setBalance(getBalance() + coin);
+        increaseIncome(coin);
+    }
 
     void makeCoffee(string nameCoffee) {
         setCup(getEmptyCup() - 1);
@@ -127,9 +123,9 @@ public:
     }
 
 public:
-    CoffeeBox(double balance, int cup, double costOfAmericano, double costOfCappuccino, double costOfEspresso)
+    CoffeeBox(double balance, double costOfAmericano, double costOfCappuccino, double costOfEspresso)
             : balance(
-            balance), cup(cup),
+            balance),
               costOfAmericano(
                       costOfAmericano),
               costOfCappuccino(
@@ -137,7 +133,6 @@ public:
               costOfEspresso(
                       costOfEspresso) {
         this->balance = balance;
-        this->cup = cup;
         this->costOfAmericano = costOfAmericano;
         this->costOfCappuccino = costOfCappuccino;
         this->costOfEspresso = costOfEspresso;
