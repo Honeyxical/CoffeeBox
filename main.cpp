@@ -24,78 +24,78 @@ void cupCheck(int numOfCups);
 
 int main() {
 
-    CoffeeBox coffeeBox(0,0);
+    CoffeeBox coffeeBox(0, 0);
 
-    while (!coffeeBox.isBlock() && coffeeBox.getEmptyCup() > 0) {
+    while (!coffeeBox.isBlock() && coffeeBox.getEmptyCup() >= 0) {
         printMainMenu(coffeeBox);
         switch (getNum()) {
             case 1:
                 cupCheck(coffeeBox.getEmptyCup());
                 printCoinMenu();
-                    while (true) {
-                        switch (getNum()) {
-                            case 1:
-                                coffeeBox.balanceReplenishment(2);
-                                break;
-                            case 2:
-                                coffeeBox.balanceReplenishment(1);
-                                break;
-                            case 3:
-                                coffeeBox.balanceReplenishment(0.5);
-                                break;
-                            case 4:
-                                coffeeBox.balanceReplenishment(0.2);
-                                break;
-                            case 5:
-                                coffeeBox.balanceReplenishment(0.1);
-                                break;
-                            default:
-                                cout
-                                        << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn !"
-                                        << endl << endl;
-                        }
-                        break;
+                while (true) {
+                    switch (getNum()) {
+                        case 1:
+                            coffeeBox.balanceReplenishment(2);
+                            break;
+                        case 2:
+                            coffeeBox.balanceReplenishment(1);
+                            break;
+                        case 3:
+                            coffeeBox.balanceReplenishment(0.5);
+                            break;
+                        case 4:
+                            coffeeBox.balanceReplenishment(0.2);
+                            break;
+                        case 5:
+                            coffeeBox.balanceReplenishment(0.1);
+                            break;
+                        default:
+                            cout
+                                    << "The coin receiver accepts only coins in the amount of 2 byn / 1 byn / 0.5 byn / 0.2 byn / 0.1 byn !"
+                                    << endl << endl;
                     }
                     break;
-                case 2:
-                    if (coffeeBox.getBalance() >= coffeeBox.getCostOfAmericano()) {
-                        coffeeBox.makeCoffee("Americano");
-                        break;
-                    } else {
-                        cout << "Not enough funds!" << endl;
-                        sleep(2);
-                        break;
-                    }
-                case 3:
-                    if (coffeeBox.getBalance() >= coffeeBox.getCostOfCappuccino()) {
-                        coffeeBox.makeCoffee("Cappuccino");
-                        break;
-                    } else {
-                        cout << "Not enough funds!" << endl;
-                        sleep(2);
-                        break;
-                    }
-                case 4:
-                    if (coffeeBox.getBalance() >= coffeeBox.getCostOfEspresso()) {
-                        coffeeBox.makeCoffee("Espresso");
-                        break;
-                    } else {
-                        cout << "Not enough funds!" << endl;
-                        sleep(2);
-                        break;
-                    }
-                case 5:
-                    if (enterPin(coffeeBox)) {
-                        serviceMenu(coffeeBox);
-                    }
+                }
+                break;
+            case 2:
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfAmericano()) {
+                    coffeeBox.makeCoffee("Americano");
                     break;
-            }
+                } else {
+                    cout << "Not enough funds!" << endl;
+                    sleep(2);
+                    break;
+                }
+            case 3:
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfCappuccino()) {
+                    coffeeBox.makeCoffee("Cappuccino");
+                    break;
+                } else {
+                    cout << "Not enough funds!" << endl;
+                    sleep(2);
+                    break;
+                }
+            case 4:
+                if (coffeeBox.getBalance() >= coffeeBox.getCostOfEspresso()) {
+                    coffeeBox.makeCoffee("Espresso");
+                    break;
+                } else {
+                    cout << "Not enough funds!" << endl;
+                    sleep(2);
+                    break;
+                }
+            case 5:
+                if (enterPin(coffeeBox)) {
+                    serviceMenu(coffeeBox);
+                }
+                break;
+        }
 
     }
-    if(coffeeBox.isBlock()) {
-        blockCoffeeBox();
-    } else if(coffeeBox.getEmptyCup() > 0){
+    if (coffeeBox.getEmptyCup() == 0) {
         cout << "There are not enough cups :(" << endl;
+        blockCoffeeBox();
+    } else if (coffeeBox.isBlock()) {
         blockCoffeeBox();
     }
 }
@@ -129,13 +129,13 @@ void serviceMenu(CoffeeBox &coffeeBox) {
 }
 
 void printMainMenu(CoffeeBox coffeeBox) {
-    cout << "Coffee Box. LEI700 v1.0" << endl;
-    cout << "Balance: " << coffeeBox.getBalance() << " byn." << endl;
-    cout << "1. Add money." << endl;
-    cout << "2. Make Americano " << "(" << coffeeBox.getCostOfAmericano() << " byn)." << endl;
-    cout << "3. Make Cappuccino " << "(" << coffeeBox.getCostOfCappuccino() << " byn)." << endl;
-    cout << "4. Make Espresso " << "(" << coffeeBox.getCostOfEspresso() << " byn)." << endl;
-    cout << "5. Service menu." << endl;
+    cout << "Coffee Box LEI700 v1.0" << endl;
+    cout << "Balance: " << coffeeBox.getBalance() << " byn" << endl;
+    cout << "1. Add money" << endl;
+    cout << "2. Make Americano " << coffeeBox.getCupVolume() << "ml. (" << coffeeBox.getCostOfAmericano() << " byn)" << endl;
+    cout << "3. Make Cappuccino " << coffeeBox.getCupVolume() << "ml. (" << coffeeBox.getCostOfCappuccino() << " byn)" << endl;
+    cout << "4. Make Espresso " << coffeeBox.getCupVolume() << "ml. (" << coffeeBox.getCostOfEspresso() << " byn)" << endl;
+    cout << "5. Service menu" << endl;
     cout << "(c) 2021, by Hanexical, w_myslicki" << endl << endl;
     cout << "Please select the menu item:";
 }
@@ -241,8 +241,8 @@ int getNum(string message) {
 // block
 
 void cupCheck(int numOfCups) {
-    if(numOfCups <= 5){
-        cout << "Warning, cups left " << numOfCups  << "." << endl;
+    if (numOfCups <= 5) {
+        cout << "Warning, cups left " << numOfCups << "." << endl;
     }
 }
 
