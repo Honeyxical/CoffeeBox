@@ -23,7 +23,7 @@ private:
     double costOfAmericano = 1.80;
     double costOfCappuccino = 2.30;
     double costOfEspresso = 1.80;
-    int pin = 1234;
+    int pin = 7004;
     bool block = false;
 
 public:
