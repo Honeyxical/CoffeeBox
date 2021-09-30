@@ -113,7 +113,6 @@ public:
 
     void makeCoffee(string nameCoffee) {
         if (cup != 0) {
-            setBlock(true);
             setCup(getEmptyCup() - 1);
             cout << nameCoffee << " is being prepared!" << endl << endl;
             installingCup();
@@ -130,8 +129,9 @@ public:
             cout << endl;
             cout << nameCoffee << " is ready! Take the cup away!" << endl << endl;
             sleep(2);
+        } else{
+            setBlock(true);
         }
-        setBlock(true);
     }
 
     void addCups() {
