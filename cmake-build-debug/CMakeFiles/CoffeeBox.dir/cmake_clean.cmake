@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/CoffeeBox.dir/main.cpp.obj"
-  "CoffeeBox.exe"
-  "CoffeeBox.exe.manifest"
+  "CMakeFiles/CoffeeBox.dir/main.cpp.o"
+  "CoffeeBox"
   "CoffeeBox.pdb"
-  "libCoffeeBox.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
