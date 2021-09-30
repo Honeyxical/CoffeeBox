@@ -5,21 +5,13 @@
 using namespace std;
 
 int getNum();
-
 int getNum(string message);
-
 bool enterPin(CoffeeBox &coffeeBox);
-
 void serviceMenu(CoffeeBox &coffeeBox);
-
 void printServiceMenu();
-
 void printMainMenu(CoffeeBox coffeeBox);
-
 void printCoinMenu();
-
 void blockCoffeeBox();
-
 void cupCheck(int numOfCups);
 
 int main() {

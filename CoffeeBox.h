@@ -4,13 +4,9 @@
 using namespace std;
 
 int getNum(string message);
-
 void installingCup();
-
 void supplyCoffee();
-
 void supplyWater();
-
 void supplyMilk();
 
 
@@ -139,7 +135,7 @@ public:
         int availableCups = 700 - getEmptyCup();
         cout << "Available for replenishment: " << availableCups << " cups." << endl;
         int cups = getNum("Enter quantity of cups: ");
-        if (cups <= availableCups) {
+        if (cups <= availableCups && cups > 0) {
             addNewCup(cups);
             cout << "Completed!" << endl;
             sleep(2);
